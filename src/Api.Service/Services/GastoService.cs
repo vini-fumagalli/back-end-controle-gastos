@@ -1,3 +1,4 @@
+using System.Globalization;
 using Api.Domain.DTOs.Gasto;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Repositories;
@@ -32,6 +33,26 @@ public class GastoService : IGastoService
     public async Task<RespostaEntity> Get()
     {
         var resposta = await _repository.Get();
+
+        // var mesAtual = DateTime.Now.Month;
+        // var anoAtual = DateTime.Now.Year;
+        // var proxMes = mesAtual + 1;
+        // var proxAno = anoAtual;
+
+        // if (proxMes > 12)
+        // {
+        //     proxAno++;
+        //     proxMes = 1;
+        // }
+
+        // var dataIni = new DateTime(anoAtual, mesAtual, 6);
+        // var dataFim = new DateTime(proxAno, proxMes, 6);
+
+        // resposta = resposta
+        //             .Where(g => g.DataMax >= dataIni &&
+        //                         g.DataMax <= dataFim)
+        //             .ToList();
+
         return new RespostaEntity
         {
             Sucesso = resposta.Any(),
