@@ -4,7 +4,7 @@ namespace Api.Domain.Interfaces.Repositories;
 
 public interface ILoginRepository
 {
-    Task<bool> Deslogar();
+    Task<bool> SignOff();
     Task<bool> SingIn(UsuarioEntity usuario);
-    Task<UsuarioEntity?> SingUp(UsuarioEntity usuario); 
+    Task<UsuarioEntity?> SingUp(UsuarioEntity usuario);
 }

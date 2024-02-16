@@ -1,4 +1,5 @@
 using Api.Domain.DTOs;
+using Api.Domain.DTOs.Login;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -53,11 +54,11 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("deslogar")]
-    public async Task<ActionResult<RespostaEntity>> Deslogar()
+    public async Task<ActionResult<RespostaEntity>> SignOff()
     {
         try
         {
-            var resp = await _service.Deslogar();
+            var resp = await _service.SignOff();
             return Ok(resp);
         }
         catch (Exception ex)

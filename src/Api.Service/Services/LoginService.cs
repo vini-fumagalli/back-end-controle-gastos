@@ -1,4 +1,5 @@
 using Api.Domain.DTOs;
+using Api.Domain.DTOs.Login;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Repositories;
 using Api.Domain.Interfaces.Services;
@@ -18,9 +19,9 @@ public class LoginService : ILoginService
         _mapper = mapper;
     }
 
-    public async Task<RespostaEntity> Deslogar()
+    public async Task<RespostaEntity> SignOff()
     {
-        var resposta = await _repository.Deslogar();
+        var resposta = await _repository.SignOff();
         return new RespostaEntity
         {
             Sucesso = resposta,

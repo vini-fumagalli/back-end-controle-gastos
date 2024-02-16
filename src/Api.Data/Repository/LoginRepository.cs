@@ -8,18 +8,18 @@ namespace Api.Data.Repository;
 public class LoginRepository : ILoginRepository
 {
     private readonly MyContext _context;
-    private readonly DbSet<UsuarioEntity> _dataset;
+    private readonly DbSet<UsuarioEntity> _usuTbl;
 
     public LoginRepository(MyContext context)
     {
         _context = context;
-        _dataset = _context.Set<UsuarioEntity>();
+        _usuTbl = _context.Set<UsuarioEntity>();
     }
-    public async Task<bool> Deslogar()
+    public async Task<bool> SignOff()
     {
         try
         {
-            var usuLogado = await _dataset
+            var usuLogado = await _usuTbl
                                     .SingleOrDefaultAsync(u => u.Logado == true);
 
             usuLogado!.Logado = false;
@@ -27,7 +27,7 @@ public class LoginRepository : ILoginRepository
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO DESLOGAR USUÁRIO => ", ex);
         }
@@ -37,11 +37,11 @@ public class LoginRepository : ILoginRepository
     {
         try
         {
-            var usuario = await _dataset
+            var usuario = await _usuTbl
                                 .SingleOrDefaultAsync(u => u.Usuario == login.Usuario &&
                                                         u.Senha == login.Senha);
-            
-            if(usuario == null)
+
+            if (usuario == null)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ public class LoginRepository : ILoginRepository
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO REALIZAR LOGIN => ", ex);
         }
@@ -61,22 +61,22 @@ public class LoginRepository : ILoginRepository
     {
         try
         {
-            var exists = await _dataset
+            var exists = await _usuTbl
                                 .AnyAsync(u => u.Usuario == newUsu.Usuario);
 
-            if(exists)
+            if (exists)
             {
                 return null;
             }
-            
+
             await Task.WhenAll(
-                _dataset.AddAsync(newUsu).AsTask(),
+                _usuTbl.AddAsync(newUsu).AsTask(),
                 _context.SaveChangesAsync()
             );
 
             return newUsu;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO REALIZAR CADSTRO => ", ex);
         }

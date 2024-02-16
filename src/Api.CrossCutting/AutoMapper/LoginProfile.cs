@@ -1,4 +1,5 @@
 using Api.Domain.DTOs;
+using Api.Domain.DTOs.Login;
 using Api.Domain.Entities;
 using AutoMapper;
 
