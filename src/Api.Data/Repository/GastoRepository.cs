@@ -9,11 +9,13 @@ public class GastoRepository : IGastoRepository
 {
     private readonly MyContext _context;
     private readonly DbSet<GastoEntity> _gastoTbl;
+    private readonly DbSet<UsuarioEntity> _usuTbl;
 
     public GastoRepository(MyContext context)
     {
         _context = context;
         _gastoTbl = _context.Set<GastoEntity>();
+        _usuTbl = _context.Set<UsuarioEntity>();
     }
 
     public async Task<GastoEntity?> Create(GastoEntity despesa)
@@ -39,7 +41,16 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            return await _gastoTbl.ToListAsync();
+            var usuLogado = await _usuTbl
+                                    .Where(u => u.Logado == true)
+                                    .AsNoTracking()
+                                    .Select(u => u.Usuario)
+                                    .SingleOrDefaultAsync();
+
+            return await _gastoTbl
+                            .Where(g => g.Usuario == usuLogado)
+                            .AsNoTracking()
+                            .ToListAsync();
         }
         catch (Exception ex)
         {
