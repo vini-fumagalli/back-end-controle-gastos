@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        
+        {
+            "name": "C#: api-controle-gastos [Default Configuration]",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\src\\api-controle-gastos.csproj"
+        }
+    ]
+}
