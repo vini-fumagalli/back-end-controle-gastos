@@ -17,13 +17,34 @@ public class LoginService : ILoginService
         _repository = repository;
         _mapper = mapper;
     }
+
+    public async Task<RespostaEntity> Deslogar()
+    {
+        var resposta = await _repository.Deslogar();
+        return new RespostaEntity
+        {
+            Sucesso = resposta,
+            Resposta = resposta
+        };
+    }
+
+    public async Task<RespostaEntity> SignIn(UsuarioEntity usuario)
+    {
+        var resposta = await _repository.SingIn(usuario);
+        return new RespostaEntity
+        {
+            Sucesso = resposta,
+            Resposta = resposta
+        };
+    }
+
     public async Task<RespostaEntity> SignUp(SignUpDto signUp)
     {
         var newUsu = _mapper.Map<UsuarioEntity>(signUp);
-        
+
         var resposta = await _repository.SingUp(newUsu);
         return new RespostaEntity
-        {   
+        {
             Sucesso = resposta != null,
             Resposta = resposta
         };
