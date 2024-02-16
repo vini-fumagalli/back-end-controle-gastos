@@ -30,32 +30,33 @@ public class GastoService : IGastoService
         };
     }
 
-    public async Task<RespostaEntity> Get()
+    public async Task<RespostaEntity?> Get()
     {
-        var resposta = await _repository.Get();
+        var gastosList = await _repository.Get();
+        if(!gastosList.Any())
+        {
+            return null;
+        }
 
-        // var mesAtual = DateTime.Now.Month;
-        // var anoAtual = DateTime.Now.Year;
-        // var proxMes = mesAtual + 1;
-        // var proxAno = anoAtual;
+        var salario = await _repository
+                            .GetSalario(gastosList[0].Usuario);
 
-        // if (proxMes > 12)
-        // {
-        //     proxAno++;
-        //     proxMes = 1;
-        // }
-
-        // var dataIni = new DateTime(anoAtual, mesAtual, 6);
-        // var dataFim = new DateTime(proxAno, proxMes, 6);
-
-        // resposta = resposta
-        //             .Where(g => g.DataMax >= dataIni &&
-        //                         g.DataMax <= dataFim)
-        //             .ToList();
-
+        var dto = GetGastosDto.MontarDto(gastosList, salario);
+        
         return new RespostaEntity
         {
-            Sucesso = resposta.Any(),
+            Sucesso = dto.Gastos!.Any(),
+            Resposta = dto
+        };
+    }
+
+    public async Task<RespostaEntity> Update(GastoEntity gasto)
+    {
+        var resposta = await _repository.Update(gasto);
+        
+        return new RespostaEntity
+        {
+            Sucesso = resposta != null,
             Resposta = resposta
         };
     }

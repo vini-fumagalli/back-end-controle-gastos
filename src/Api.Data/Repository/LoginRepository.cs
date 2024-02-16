@@ -20,7 +20,8 @@ public class LoginRepository : ILoginRepository
         try
         {
             var usuLogado = await _usuTbl
-                                    .SingleOrDefaultAsync(u => u.Logado == true);
+                                    .SingleOrDefaultAsync(u => 
+                                        u.Logado == true);
 
             usuLogado!.Logado = false;
             await _context.SaveChangesAsync();
@@ -38,8 +39,9 @@ public class LoginRepository : ILoginRepository
         try
         {
             var usuario = await _usuTbl
-                                .SingleOrDefaultAsync(u => u.Usuario == login.Usuario &&
-                                                        u.Senha == login.Senha);
+                                .SingleOrDefaultAsync(u => 
+                                    u.Usuario == login.Usuario &&
+                                    u.Senha == login.Senha);
 
             if (usuario == null)
             {

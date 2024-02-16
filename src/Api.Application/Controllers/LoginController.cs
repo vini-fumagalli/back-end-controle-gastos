@@ -53,7 +53,7 @@ public class LoginController : ControllerBase
         }
     }
 
-    [HttpPost("deslogar")]
+    [HttpPost("sign-off")]
     public async Task<ActionResult<RespostaEntity>> SignOff()
     {
         try

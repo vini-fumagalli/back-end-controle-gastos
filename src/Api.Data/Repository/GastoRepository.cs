@@ -57,4 +57,34 @@ public class GastoRepository : IGastoRepository
             throw new Exception("ERRO AO OBTER LISTA DE GASTOS => ", ex);
         }
     }
+
+    public async Task<double?> GetSalario(string usuario)
+    {
+        return await _usuTbl
+                        .Where(u => u.Usuario == usuario)
+                        .AsNoTracking()
+                        .Select(u => u.Salario)
+                        .SingleOrDefaultAsync();
+    }
+
+    public async Task<GastoEntity?> Update(GastoEntity gasto)
+    {
+        var gastoToUpdate = await _gastoTbl
+                                    .SingleOrDefaultAsync(g => 
+                                        g.Usuario == gasto.Usuario &&
+                                        g.Tipo == gasto.Tipo);
+
+        if(gastoToUpdate == null)
+        {
+            return null;
+        }
+
+        _gastoTbl
+        .Entry(gastoToUpdate)
+        .CurrentValues
+        .SetValues(gasto);
+
+        await _context.SaveChangesAsync();
+        return gasto;
+    }
 }
