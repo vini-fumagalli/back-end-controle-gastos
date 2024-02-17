@@ -77,7 +77,7 @@ public class GastoController : ControllerBase
         }
     }
 
-    [HttpDelete("{tipo:string}")]
+    [HttpDelete("{tipo}")]
     public async Task<ActionResult<RespostaEntity>> Delete(string tipo)
     {
         try
