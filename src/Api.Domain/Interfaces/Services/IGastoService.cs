@@ -7,5 +7,7 @@ public interface IGastoService
 {
     Task<RespostaEntity?> Get();
     Task<RespostaEntity> Create(CreateGastoDto dto);
-    Task<RespostaEntity> Update(GastoEntity gasto);
+    Task<RespostaEntity> Update(UpdateGastoDto dto);
+    Task<RespostaEntity> UpdateSalario(double newSalario);
+    Task<RespostaEntity> Delete(string tipo);
 }

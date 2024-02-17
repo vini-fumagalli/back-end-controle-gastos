@@ -50,4 +50,15 @@ public class LoginService : ILoginService
             Resposta = resposta
         };
     }
+
+    // public async Task<RespostaEntity> UpdateSalario(double salario)
+    // {
+    //     var resposta = await _repository.UpdateSalario(salario);
+
+    //     return new RespostaEntity
+    //     {
+    //         Sucesso = resposta != null,
+    //         Resposta = resposta
+    //     };
+    // }
 }

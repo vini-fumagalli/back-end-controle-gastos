@@ -30,6 +30,19 @@ public class GastoService : IGastoService
         };
     }
 
+    public async Task<RespostaEntity> Delete(string tipo)
+    {
+        var usu = await _repository.GetUsuLogado();
+        
+        var resposta = await _repository.Delete(usu!, tipo);
+
+        return new RespostaEntity
+        {
+            Sucesso = resposta,
+            Resposta = resposta
+        };
+    }
+
     public async Task<RespostaEntity?> Get()
     {
         var gastosList = await _repository.Get();
@@ -50,11 +63,27 @@ public class GastoService : IGastoService
         };
     }
 
-    public async Task<RespostaEntity> Update(GastoEntity gasto)
+    public async Task<RespostaEntity> Update(UpdateGastoDto dto)
     {
+        var usuLogado = await _repository.GetUsuLogado();
+
+        var gasto = _mapper.Map<GastoEntity>(dto);
+        gasto.Usuario = usuLogado!;
+
         var resposta = await _repository.Update(gasto);
         
         return new RespostaEntity
+        {
+            Sucesso = resposta != null,
+            Resposta = resposta
+        };
+    }
+
+    public async Task<RespostaEntity> UpdateSalario(double newSalario)
+    {
+        var resposta = await _repository.UpdateSalario(newSalario);
+
+        return new RespostaEntity 
         {
             Sucesso = resposta != null,
             Resposta = resposta

@@ -10,5 +10,8 @@ public class GastoProfile : Profile
     {
         CreateMap<CreateGastoDto, GastoEntity>()
         .ForMember(dest => dest.Pago, opt => opt.MapFrom(src => false));
+
+        CreateMap<UpdateGastoDto, GastoEntity>();
+        
     }
 }
