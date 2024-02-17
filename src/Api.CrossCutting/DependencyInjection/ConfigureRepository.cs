@@ -10,6 +10,7 @@ public class ConfigureRepository
     public static void ConfigureDependenciesRepository(IServiceCollection serviceCollection, string chave)
     {
         serviceCollection.AddScoped(typeof(ILoginRepository), typeof(LoginRepository));
+        serviceCollection.AddScoped(typeof(IGastoRepository), typeof(GastoRepository));
 
         string connectionString = Environment.GetEnvironmentVariable(chave, EnvironmentVariableTarget.Machine)!;
         serviceCollection.AddDbContext<MyContext>(
