@@ -5,7 +5,7 @@ namespace Api.Domain.Entities;
 
 public class GastoEntity
 {
-    [ForeignKey("Usuario")]
+    [Key]
     public string Usuario { get; set; } = "";
     [Key]
     public string Tipo { get; set; } = "";

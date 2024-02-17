@@ -12,15 +12,10 @@ public class MyContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.Entity<UsuarioEntity>()
-        // .HasKey(u => u.Usuario);
+        modelBuilder.Entity<UsuarioEntity>()
+        .HasKey(u => new { u.Usuario });
 
-        // modelBuilder.Entity<GastoEntity>()
-        // .HasKey(g => g.Tipo);
-
-        // modelBuilder.Entity<GastoEntity>()
-        // .HasOne(g => g.Usuario)
-        // .WithMany()
-        // .HasForeignKey(g => g.Usuario);
+        modelBuilder.Entity<GastoEntity>()
+        .HasKey(g => new { g.Usuario, g.Tipo });
     }
 }
