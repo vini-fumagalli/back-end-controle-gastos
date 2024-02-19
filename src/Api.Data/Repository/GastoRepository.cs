@@ -41,12 +41,12 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            var chaves = new string[] {usu, tipo};
+            var chaves = new string[] { usu, tipo };
 
             var gastoToDelete = await _gastoTbl
                                         .FindAsync(chaves);
 
-            if(gastoToDelete == null)
+            if (gastoToDelete == null)
             {
                 return false;
             }
@@ -56,7 +56,7 @@ public class GastoRepository : IGastoRepository
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO EXCLUIR GASTO => ", ex);
         }
@@ -66,11 +66,7 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            var usuLogado = await _usuTbl
-                                    .Where(u => u.Logado == true)
-                                    .AsNoTracking()
-                                    .Select(u => u.Usuario)
-                                    .SingleOrDefaultAsync();
+            var usuLogado = await GetUsuLogado();
 
             return await _gastoTbl
                             .Where(g => g.Usuario == usuLogado)
@@ -93,7 +89,7 @@ public class GastoRepository : IGastoRepository
                             .Select(u => u.Salario)
                             .SingleOrDefaultAsync();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER SALÁRIO => ", ex);
         }
@@ -109,7 +105,7 @@ public class GastoRepository : IGastoRepository
                             .Select(u => u.Usuario)
                             .SingleOrDefaultAsync();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER USUÁRIO LOGADO => ", ex);
         }
@@ -118,11 +114,11 @@ public class GastoRepository : IGastoRepository
     public async Task<GastoEntity?> Update(GastoEntity gasto)
     {
         var gastoToUpdate = await _gastoTbl
-                                    .SingleOrDefaultAsync(g => 
+                                    .SingleOrDefaultAsync(g =>
                                         g.Usuario == gasto.Usuario &&
                                         g.Tipo == gasto.Tipo);
 
-        if(gastoToUpdate == null)
+        if (gastoToUpdate == null)
         {
             return null;
         }
@@ -143,17 +139,17 @@ public class GastoRepository : IGastoRepository
             var usuToUpdate = await _usuTbl
                                     .SingleOrDefaultAsync(u => u.Logado == true);
 
-            if(usuToUpdate == null)
+            if (usuToUpdate == null)
             {
                 return null;
             }
 
             usuToUpdate.Salario = newSalario;
             await _context.SaveChangesAsync();
-            
+
             return usuToUpdate;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
         }
