@@ -4,7 +4,7 @@ using Api.CrossCutting.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(LoginProfile));
+ConfigureAutoMapper.ConfigureDependenciesAutoMapper(builder.Services);
 ConfigureService.ConfigureDependenciesService(builder.Services);
 ConfigureRepository.ConfigureDependenciesRepository(builder.Services, "DB_CONNECTION_GASTOS");
 builder.Services.AddControllers();
