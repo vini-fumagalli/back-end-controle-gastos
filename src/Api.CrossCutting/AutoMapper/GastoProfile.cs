@@ -12,6 +12,17 @@ public class GastoProfile : Profile
         .ForMember(dest => dest.Pago, opt => opt.MapFrom(src => false));
 
         CreateMap<UpdateGastoDto, GastoEntity>();
-        
+
+        CreateMap<GastoEntity, GastoDtoResult>()
+        .AfterMap((src, dest) =>
+        {
+            dest.DataMax = FormatDate(src.DataMax);
+        });
+
+    }
+
+    public string? FormatDate(DateTime? data)
+    {
+        return data?.ToString("dd/MM/yyyy");
     }
 }

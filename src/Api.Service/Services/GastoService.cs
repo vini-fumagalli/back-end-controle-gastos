@@ -33,7 +33,7 @@ public class GastoService : IGastoService
     public async Task<RespostaEntity> Delete(string tipo)
     {
         var usu = await _repository.GetUsuLogado();
-        
+
         var resposta = await _repository.Delete(usu!, tipo);
 
         return new RespostaEntity
@@ -46,7 +46,7 @@ public class GastoService : IGastoService
     public async Task<RespostaEntity?> Get()
     {
         var gastosList = await _repository.Get();
-        if(!gastosList.Any())
+        if (!gastosList.Any())
         {
             return null;
         }
@@ -55,7 +55,10 @@ public class GastoService : IGastoService
                             .GetSalario(gastosList[0].Usuario);
 
         var dto = GetGastosDto.MontarDto(gastosList, salario);
-        
+
+        var gastoListDto = _mapper.Map<List<GastoDtoResult>>(gastosList);
+        dto.Gastos = gastoListDto;
+
         return new RespostaEntity
         {
             Sucesso = dto.Gastos!.Any(),
@@ -71,7 +74,7 @@ public class GastoService : IGastoService
         gasto.Usuario = usuLogado!;
 
         var resposta = await _repository.Update(gasto);
-        
+
         return new RespostaEntity
         {
             Sucesso = resposta != null,
@@ -83,7 +86,7 @@ public class GastoService : IGastoService
     {
         var resposta = await _repository.UpdateSalario(newSalario);
 
-        return new RespostaEntity 
+        return new RespostaEntity
         {
             Sucesso = resposta != null,
             Resposta = resposta

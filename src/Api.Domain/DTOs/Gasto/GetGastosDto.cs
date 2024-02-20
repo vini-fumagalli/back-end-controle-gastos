@@ -4,11 +4,11 @@ namespace Api.Domain.DTOs.Gasto;
 
 public class GetGastosDto
 {
-    public List<GastoEntity>? Gastos { get; set; }
+    public List<GastoDtoResult>? Gastos { get; set; }
     public double? Total { get; set; }
     public double? GastoMax { get; set; }
 
-    public static GetGastosDto MontarDto(List<GastoEntity> list, 
+    public static GetGastosDto MontarDto(List<GastoEntity> list,
                                          double? salario)
     {
         var mesAtual = DateTime.Now.Month;
@@ -33,11 +33,10 @@ public class GetGastosDto
         var total = filtroMes.Sum(f => f.Valor);
 
         var gastoMax = salario - total;
-        gastoMax = gastoMax > 0 ? gastoMax : 0; 
+        gastoMax = gastoMax > 0 ? gastoMax : 0;
 
         return new GetGastosDto
         {
-            Gastos = list,
             Total = total,
             GastoMax = gastoMax
         };
