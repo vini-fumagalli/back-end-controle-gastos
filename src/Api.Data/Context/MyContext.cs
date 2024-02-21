@@ -17,5 +17,10 @@ public class MyContext : DbContext
 
         modelBuilder.Entity<GastoEntity>()
         .HasKey(g => new { g.Usuario, g.Tipo });
+
+        modelBuilder.Entity<GastoEntity>()
+        .HasOne(g => g.UsuarioNavigation)
+        .WithMany()
+        .HasForeignKey(g => g.Usuario);
     }
 }

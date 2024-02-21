@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace apicontrolegastos.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20240217223612_Gasto")]
-    partial class Gasto
+    [Migration("20240221192238_TesteMigration")]
+    partial class TesteMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,10 +31,12 @@ namespace apicontrolegastos.Migrations
             modelBuilder.Entity("Api.Domain.Entities.GastoEntity", b =>
                 {
                     b.Property<string>("Usuario")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(0);
 
                     b.Property<string>("Tipo")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(1);
 
                     b.Property<DateTime?>("DataMax")
                         .HasColumnType("datetime2");
@@ -68,6 +70,17 @@ namespace apicontrolegastos.Migrations
                     b.HasKey("Usuario");
 
                     b.ToTable("USUARIO");
+                });
+
+            modelBuilder.Entity("Api.Domain.Entities.GastoEntity", b =>
+                {
+                    b.HasOne("Api.Domain.Entities.UsuarioEntity", "UsuarioNavigation")
+                        .WithMany()
+                        .HasForeignKey("Usuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioNavigation");
                 });
 #pragma warning restore 612, 618
         }
