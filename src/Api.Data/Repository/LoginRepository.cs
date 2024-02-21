@@ -23,6 +23,11 @@ public class LoginRepository : ILoginRepository
                                     .SingleOrDefaultAsync(u => 
                                         u.Logado == true);
 
+            if(usuLogado == null)
+            {
+                return false;
+            }
+
             usuLogado!.Logado = false;
             await _context.SaveChangesAsync();
 

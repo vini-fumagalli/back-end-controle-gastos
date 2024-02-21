@@ -59,7 +59,7 @@ public class LoginController : ControllerBase
         try
         {
             var resp = await _service.SignOff();
-            return Ok(resp);
+            return resp.Sucesso == true ? Ok(resp) : NotFound();
         }
         catch (Exception ex)
         {
