@@ -80,6 +80,17 @@ public class GastoService : IGastoService
         };
     }
 
+    public async Task<RespostaEntity> SalarioCadastrado()
+    {
+        var resposta = await _repository.SalarioCadastrado();
+
+        return new RespostaEntity
+        {
+            Sucesso = true,
+            Resposta = resposta
+        };
+    }
+
     public async Task<RespostaEntity> Update(UpdateGastoDto dto)
     {
         var usuLogado = await _repository.GetUsuLogado();

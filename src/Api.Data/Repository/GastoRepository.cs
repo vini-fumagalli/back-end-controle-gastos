@@ -122,6 +122,27 @@ public class GastoRepository : IGastoRepository
         }
     }
 
+    public async Task<bool> SalarioCadastrado()
+    {
+        try
+        {
+            var usuLogado = await _usuTbl
+                                    .SingleOrDefaultAsync(u => 
+                                        u.Logado == true);
+
+            if(usuLogado!.Salario == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("ERRO AO VERIFICAR SALÁRIO => ", ex);
+        }
+    }
+
     public async Task<GastoEntity?> Update(GastoEntity gasto)
     {
         var usu = gasto.Usuario;

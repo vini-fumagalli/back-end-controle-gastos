@@ -47,6 +47,21 @@ public class GastoController : ControllerBase
         }
     }
 
+    [HttpGet("salario-cadastrado")]
+    public async Task<ActionResult<RespostaEntity>> SalarioCadastrado()
+    {
+        try
+        {
+            var resposta =  await _service.SalarioCadastrado();
+            return Ok(resposta);
+        }
+        catch(Exception ex)
+        {
+            Log.Error(ex.Message);
+            throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
+        }
+    }
+    
     [HttpPost]
     public async Task<ActionResult<RespostaEntity>> Create(CreateGastoDto dto)
     {
@@ -106,4 +121,5 @@ public class GastoController : ControllerBase
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
         }
     }
+
 }

@@ -12,4 +12,5 @@ public interface IGastoRepository
     Task<string?> GetUsuLogado();
     Task<bool> Delete(string usu, string tipo);
     Task<GastoEntity?> Get(string usu, string tipo);
+    Task<bool> SalarioCadastrado();
 }
