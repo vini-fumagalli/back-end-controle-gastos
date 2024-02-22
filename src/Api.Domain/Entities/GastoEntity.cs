@@ -6,7 +6,7 @@ namespace Api.Domain.Entities;
 public class GastoEntity
 {
     [ForeignKey("Usuario")]
-    public virtual UsuarioEntity UsuarioNavigation { get; set; } = new UsuarioEntity();
+    public virtual UsuarioEntity? UsuarioNavigation { get; set; }
 
     [Key, Column(Order = 0)]
     public string Usuario { get; set; } = "";

@@ -41,10 +41,7 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            var chaves = new string[] { usu, tipo };
-
-            var gastoToDelete = await _gastoTbl
-                                        .FindAsync(chaves);
+            var gastoToDelete = await Get(usu, tipo);
 
             if (gastoToDelete == null)
             {
@@ -76,6 +73,20 @@ public class GastoRepository : IGastoRepository
         catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER LISTA DE GASTOS => ", ex);
+        }
+    }
+
+    public async Task<GastoEntity?> Get(string usu, string tipo)
+    {
+        try
+        {
+            var keys = new string[] {usu, tipo};
+
+            return await _gastoTbl.FindAsync(keys); 
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("ERRO AO OBTER GASTO DESEJADO => ", ex);
         }
     }
 
@@ -113,10 +124,10 @@ public class GastoRepository : IGastoRepository
 
     public async Task<GastoEntity?> Update(GastoEntity gasto)
     {
-        var gastoToUpdate = await _gastoTbl
-                                    .SingleOrDefaultAsync(g =>
-                                        g.Usuario == gasto.Usuario &&
-                                        g.Tipo == gasto.Tipo);
+        var usu = gasto.Usuario;
+        var tipo = gasto.Tipo;
+
+        var gastoToUpdate = await Get(usu, tipo);
 
         if (gastoToUpdate == null)
         {

@@ -10,4 +10,5 @@ public interface IGastoService
     Task<RespostaEntity> Update(UpdateGastoDto dto);
     Task<RespostaEntity> UpdateSalario(double newSalario);
     Task<RespostaEntity> Delete(string tipo);
+    Task<RespostaEntity> Get(string usu, string tipo);
 }

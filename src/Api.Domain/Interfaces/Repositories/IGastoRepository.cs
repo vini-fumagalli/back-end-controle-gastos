@@ -11,4 +11,5 @@ public interface IGastoRepository
     Task<UsuarioEntity?> UpdateSalario(double salario);
     Task<string?> GetUsuLogado();
     Task<bool> Delete(string usu, string tipo);
+    Task<GastoEntity?> Get(string usu, string tipo);
 }

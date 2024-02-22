@@ -32,6 +32,21 @@ public class GastoController : ControllerBase
         }
     }
 
+    [HttpGet("{usu}/{tipo}")]
+    public async Task<ActionResult<RespostaEntity>> Get(string usu, string tipo)
+    {
+        try
+        {
+            var resposta =  await _service.Get(usu, tipo);
+            return Ok(resposta);
+        }
+        catch(Exception ex)
+        {
+            Log.Error(ex.Message);
+            throw new Exception("ERRO AO OBTER GASTO DESEJADO => ", ex);
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<RespostaEntity>> Create(CreateGastoDto dto)
     {

@@ -26,8 +26,10 @@ public class GetGastosDto
         var dataFim = new DateTime(proxAno, proxMes, 6);
 
         var filtroMes = list
-                        .Where(g => g.DataMax >= dataIni &&
-                                    g.DataMax <= dataFim)
+                        .Where(g => 
+                            g.DataMax >= dataIni &&
+                            g.DataMax <= dataFim &&
+                            g.Pago == false)
                         .ToList();
 
         var total = filtroMes.Sum(f => f.Valor);

@@ -22,6 +22,9 @@ public class GastoService : IGastoService
     {
         var despesa = _mapper.Map<GastoEntity>(dto);
 
+        var usuLogado = await _repository.GetUsuLogado();
+        despesa.Usuario = usuLogado!;
+
         var resposta = await _repository.Create(despesa);
         return new RespostaEntity
         {
@@ -63,6 +66,17 @@ public class GastoService : IGastoService
         {
             Sucesso = dto.Gastos!.Any(),
             Resposta = dto
+        };
+    }
+
+    public async Task<RespostaEntity> Get(string usu, string tipo)
+    {
+        var resposta = await _repository.Get(usu, tipo);
+        
+        return new RespostaEntity
+        {
+            Sucesso = true,
+            Resposta = resposta
         };
     }
 

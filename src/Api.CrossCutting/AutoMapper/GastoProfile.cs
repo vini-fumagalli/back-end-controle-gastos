@@ -9,7 +9,8 @@ public class GastoProfile : Profile
     public GastoProfile()
     {
         CreateMap<CreateGastoDto, GastoEntity>()
-        .ForMember(dest => dest.Pago, opt => opt.MapFrom(src => false));
+        .ForMember(dest => dest.Pago, opt => opt.MapFrom(src => false))
+        .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => src.Tipo.ToUpper()));
 
         CreateMap<UpdateGastoDto, GastoEntity>();
 
