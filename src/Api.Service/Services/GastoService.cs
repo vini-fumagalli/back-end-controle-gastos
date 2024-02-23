@@ -23,7 +23,7 @@ public class GastoService : IGastoService
         var despesa = _mapper.Map<GastoEntity>(dto);
 
         var usuLogado = await _repository.GetUsuLogado();
-        despesa.Usuario = usuLogado!;
+        despesa.Usuario = usuLogado!.Usuario;
 
         var resposta = await _repository.Create(despesa);
         return new RespostaEntity
@@ -37,7 +37,7 @@ public class GastoService : IGastoService
     {
         var usu = await _repository.GetUsuLogado();
 
-        var resposta = await _repository.Delete(usu!, tipo);
+        var resposta = await _repository.Delete(usu!.Usuario, tipo);
 
         return new RespostaEntity
         {
@@ -96,7 +96,7 @@ public class GastoService : IGastoService
         var usuLogado = await _repository.GetUsuLogado();
 
         var gasto = _mapper.Map<GastoEntity>(dto);
-        gasto.Usuario = usuLogado!;
+        gasto.Usuario = usuLogado!.Usuario;
 
         var resposta = await _repository.Update(gasto);
 

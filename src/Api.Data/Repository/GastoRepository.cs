@@ -66,7 +66,8 @@ public class GastoRepository : IGastoRepository
             var usuLogado = await GetUsuLogado();
 
             return await _gastoTbl
-                            .Where(g => g.Usuario == usuLogado)
+                            .Where(g => 
+                                g.Usuario == usuLogado!.Usuario)
                             .AsNoTracking()
                             .ToListAsync();
         }
@@ -106,15 +107,14 @@ public class GastoRepository : IGastoRepository
         }
     }
 
-    public async Task<string?> GetUsuLogado()
+    public async Task<UsuarioEntity?> GetUsuLogado()
     {
         try
         {
             return await _usuTbl
-                            .Where(u => u.Logado == true)
                             .AsNoTracking()
-                            .Select(u => u.Usuario)
-                            .SingleOrDefaultAsync();
+                            .SingleOrDefaultAsync(u => 
+                                u.Logado == true);
         }
         catch (Exception ex)
         {
@@ -126,9 +126,7 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            var usuLogado = await _usuTbl
-                                    .SingleOrDefaultAsync(u => 
-                                        u.Logado == true);
+            var usuLogado = await GetUsuLogado();
 
             if(usuLogado!.Salario == null)
             {
