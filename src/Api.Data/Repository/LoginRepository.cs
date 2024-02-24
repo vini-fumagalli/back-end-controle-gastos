@@ -15,6 +15,7 @@ public class LoginRepository : ILoginRepository
         _context = context;
         _usuTbl = _context.Set<UsuarioEntity>();
     }
+
     public async Task<bool> SignOff()
     {
         try
@@ -43,6 +44,8 @@ public class LoginRepository : ILoginRepository
     {
         try
         {
+            await SignOff();
+
             var usuario = await _usuTbl
                                 .SingleOrDefaultAsync(u => 
                                     u.Usuario == login.Usuario &&

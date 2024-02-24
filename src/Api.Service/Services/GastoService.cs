@@ -46,12 +46,17 @@ public class GastoService : IGastoService
         };
     }
 
-    public async Task<RespostaEntity?> Get()
+    public async Task<RespostaEntity> Get()
     {
         var gastosList = await _repository.Get();
-        if (!gastosList.Any())
+
+        if(!gastosList.Any())
         {
-            return null;
+            return new RespostaEntity
+            { 
+                Sucesso = false,
+                Resposta = gastosList 
+            };
         }
 
         var salario = await _repository
@@ -64,7 +69,7 @@ public class GastoService : IGastoService
 
         return new RespostaEntity
         {
-            Sucesso = dto.Gastos!.Any(),
+            Sucesso = true,
             Resposta = dto
         };
     }
