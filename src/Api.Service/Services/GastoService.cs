@@ -48,15 +48,12 @@ public class GastoService : IGastoService
 
     public async Task<RespostaEntity> Get()
     {
-        double? salario;
         var usuLogado = await _repository.GetUsuLogado();
         var gastosList = await _repository.Get(usuLogado!.Usuario);
+        var salario = await _repository.GetSalario(usuLogado.Usuario);
 
         if(!gastosList.Any())
         {
-            salario = await _repository
-                                .GetSalario(usuLogado!.Usuario);
-
             var resposta = GetGastosDto
                             .MontarDto(gastosList, salario);
 
@@ -66,9 +63,6 @@ public class GastoService : IGastoService
                 Resposta = resposta 
             };
         }
-
-        salario = await _repository
-                            .GetSalario(gastosList[0].Usuario);
 
         var dto = GetGastosDto
                         .MontarDto(gastosList, salario);
