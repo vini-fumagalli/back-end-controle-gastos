@@ -9,8 +9,16 @@ public class GetGastosDto
     public double? GastoMax { get; set; }
 
     public static GetGastosDto MontarDto(List<GastoEntity> list,
-                                         double? salario)
+                                                double? salario)
     {
+        if(list.Count == 0)
+        {
+            return new GetGastosDto
+            {
+                Total = 0,
+                GastoMax = salario
+            };
+        }
         var mesAtual = DateTime.Now.Month;
         var anoAtual = DateTime.Now.Year;
         var proxMes = mesAtual + 1;
@@ -41,6 +49,15 @@ public class GetGastosDto
         {
             Total = total,
             GastoMax = gastoMax
+        };
+    }
+
+    public static GetGastosDto MontarDtoSemLista(double? salario)
+    {
+        return new GetGastosDto
+        {
+            Total = 0,
+            GastoMax = salario
         };
     }
 }

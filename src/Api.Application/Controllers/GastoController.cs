@@ -82,6 +82,11 @@ public class GastoController : ControllerBase
     {
         try
         {
+            if((dto.Pago == false && dto.DataMax == null) || dto.Valor == null)
+            {
+                return BadRequest();
+            }
+
             var resposta =  await _service.Update(dto);
             return Ok(resposta);
         }
@@ -92,7 +97,7 @@ public class GastoController : ControllerBase
         }
     }
 
-    [HttpPut("salario/{salario:double}")]
+    [HttpPut("salario/{salario}")]
     public async Task<ActionResult<RespostaEntity>> UpdateSalario(double salario)
     {
         try
