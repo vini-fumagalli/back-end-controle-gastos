@@ -4,7 +4,7 @@ namespace Api.Domain.Interfaces.Repositories;
 
 public interface IGastoRepository
 {
-    Task<List<GastoEntity>> Get();
+    Task<List<GastoEntity>> Get(string usuario);
     Task<GastoEntity?> Create(GastoEntity despesa);
     Task<double?> GetSalario(string usuario);
     Task<GastoEntity?> Update(GastoEntity gasto);

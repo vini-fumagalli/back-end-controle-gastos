@@ -59,15 +59,13 @@ public class GastoRepository : IGastoRepository
         }
     }
 
-    public async Task<List<GastoEntity>> Get()
+    public async Task<List<GastoEntity>> Get(string usuario)
     {
         try
         {
-            var usuLogado = await GetUsuLogado();
-
             return await _gastoTbl
                             .Where(g => 
-                                g.Usuario == usuLogado!.Usuario)
+                                g.Usuario == usuario)
                             .AsNoTracking()
                             .ToListAsync();
         }
