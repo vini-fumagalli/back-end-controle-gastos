@@ -51,25 +51,15 @@ public class GastoService : IGastoService
         var usuLogado = await _repository.GetUsuLogado();
         var gastosList = await _repository.Get(usuLogado!.Usuario);
         var salario = await _repository.GetSalario(usuLogado.Usuario);
+        
+        var dto = GetGastosDto.MontarDto(gastosList, salario);
 
-        if(!gastosList.Any())
+        if(gastosList.Any())
         {
-            var resposta = GetGastosDto
-                            .MontarDto(gastosList, salario);
-
-            return new RespostaEntity
-            { 
-                Sucesso = true,
-                Resposta = resposta 
-            };
+            var gastoListDto = _mapper.Map<List<GastoDtoResult>>(gastosList);
+            dto.Gastos = gastoListDto;
         }
-
-        var dto = GetGastosDto
-                        .MontarDto(gastosList, salario);
-
-        var gastoListDto = _mapper.Map<List<GastoDtoResult>>(gastosList);
-        dto.Gastos = gastoListDto;
-
+        
         return new RespostaEntity
         {
             Sucesso = true,
