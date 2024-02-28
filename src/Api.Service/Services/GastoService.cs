@@ -50,16 +50,15 @@ public class GastoService : IGastoService
     {
         var usuLogado = await _repository.GetUsuLogado();
         var gastosList = await _repository.Get(usuLogado!.Usuario);
-        var salario = await _repository.GetSalario(usuLogado.Usuario);
-        
-        var dto = GetGastosDto.MontarDto(gastosList, salario);
 
-        if(gastosList.Any())
+        var dto = GetGastosDto.MontarDto(gastosList, usuLogado.Salario);
+
+        if (gastosList.Any())
         {
             var gastoListDto = _mapper.Map<List<GastoDtoResult>>(gastosList);
             dto.Gastos = gastoListDto;
         }
-        
+
         return new RespostaEntity
         {
             Sucesso = true,
@@ -70,7 +69,7 @@ public class GastoService : IGastoService
     public async Task<RespostaEntity> Get(string usu, string tipo)
     {
         var resposta = await _repository.Get(usu, tipo);
-        
+
         return new RespostaEntity
         {
             Sucesso = true,
