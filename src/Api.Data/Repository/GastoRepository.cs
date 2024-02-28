@@ -1,4 +1,5 @@
 using Api.Data.Context;
+using Api.Domain.DTOs.Gasto;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,7 @@ public class GastoRepository : IGastoRepository
         try
         {
             return await _gastoTbl
-                            .Where(g => 
+                            .Where(g =>
                                 g.Usuario == usuario)
                             .AsNoTracking()
                             .ToListAsync();
@@ -79,11 +80,11 @@ public class GastoRepository : IGastoRepository
     {
         try
         {
-            var keys = new string[] {usu, tipo};
+            var keys = new string[] { usu, tipo };
 
-            return await _gastoTbl.FindAsync(keys); 
+            return await _gastoTbl.FindAsync(keys);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER GASTO DESEJADO => ", ex);
         }
@@ -111,7 +112,7 @@ public class GastoRepository : IGastoRepository
         {
             return await _usuTbl
                             .AsNoTracking()
-                            .SingleOrDefaultAsync(u => 
+                            .SingleOrDefaultAsync(u =>
                                 u.Logado == true);
         }
         catch (Exception ex)
@@ -126,14 +127,14 @@ public class GastoRepository : IGastoRepository
         {
             var usuLogado = await GetUsuLogado();
 
-            if(usuLogado!.Salario == null)
+            if (usuLogado!.Salario == null)
             {
                 return false;
             }
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO VERIFICAR SALÁRIO => ", ex);
         }
@@ -160,7 +161,7 @@ public class GastoRepository : IGastoRepository
         return gasto;
     }
 
-    public async Task<UsuarioEntity?> UpdateSalario(double newSalario)
+    public async Task<UsuarioEntity?> UpdateSalario(UpdateSalarioDto dto)
     {
         try
         {
@@ -172,7 +173,8 @@ public class GastoRepository : IGastoRepository
                 return null;
             }
 
-            usuToUpdate.Salario = newSalario;
+            usuToUpdate.Salario = dto.Salario;
+            usuToUpdate.DiaPagamento = dto.DiaPagamento;
             await _context.SaveChangesAsync();
 
             return usuToUpdate;

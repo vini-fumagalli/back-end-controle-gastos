@@ -22,10 +22,10 @@ public class GastoController : ControllerBase
     {
         try
         {
-            var resposta =  await _service.Get();
+            var resposta = await _service.Get();
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO OBTER LISTA DE GASTOS => ", ex);
@@ -37,10 +37,10 @@ public class GastoController : ControllerBase
     {
         try
         {
-            var resposta =  await _service.Get(usu, tipo);
+            var resposta = await _service.Get(usu, tipo);
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO OBTER GASTO DESEJADO => ", ex);
@@ -52,25 +52,25 @@ public class GastoController : ControllerBase
     {
         try
         {
-            var resposta =  await _service.SalarioCadastrado();
+            var resposta = await _service.SalarioCadastrado();
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
         }
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<RespostaEntity>> Create(CreateGastoDto dto)
     {
         try
         {
-            var resposta =  await _service.Create(dto);
+            var resposta = await _service.Create(dto);
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO CADASTRAR NOVO GASTO => ", ex);
@@ -82,30 +82,30 @@ public class GastoController : ControllerBase
     {
         try
         {
-            if((dto.Pago == false && dto.DataMax == null) || dto.Valor == null)
+            if ((dto.Pago == false && dto.DataMax == null) || dto.Valor == null)
             {
                 return BadRequest();
             }
 
-            var resposta =  await _service.Update(dto);
+            var resposta = await _service.Update(dto);
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
         }
     }
 
-    [HttpPut("salario/{salario}")]
-    public async Task<ActionResult<RespostaEntity>> UpdateSalario(double salario)
+    [HttpPut("salario-payday")]
+    public async Task<ActionResult<RespostaEntity>> UpdateSalario(UpdateSalarioDto dto)
     {
         try
         {
-            var resposta =  await _service.UpdateSalario(salario);
+            var resposta = await _service.UpdateSalario(dto);
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
@@ -117,10 +117,10 @@ public class GastoController : ControllerBase
     {
         try
         {
-            var resposta =  await _service.Delete(tipo);
+            var resposta = await _service.Delete(tipo);
             return Ok(resposta);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Log.Error(ex.Message);
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);

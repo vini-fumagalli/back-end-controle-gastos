@@ -51,7 +51,7 @@ public class GastoService : IGastoService
         var usuLogado = await _repository.GetUsuLogado();
         var gastosList = await _repository.Get(usuLogado!.Usuario);
 
-        var dto = GetGastosDto.MontarDto(gastosList, usuLogado.Salario);
+        var dto = GetGastosDto.MontarDto(gastosList, usuLogado.Salario, 2);
 
         if (gastosList.Any())
         {
@@ -104,9 +104,9 @@ public class GastoService : IGastoService
         };
     }
 
-    public async Task<RespostaEntity> UpdateSalario(double newSalario)
+    public async Task<RespostaEntity> UpdateSalario(UpdateSalarioDto dto)
     {
-        var resposta = await _repository.UpdateSalario(newSalario);
+        var resposta = await _repository.UpdateSalario(dto);
 
         return new RespostaEntity
         {
