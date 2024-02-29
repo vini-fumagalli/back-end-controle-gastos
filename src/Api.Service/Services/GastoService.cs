@@ -50,8 +50,14 @@ public class GastoService : IGastoService
     {
         var usuLogado = await _repository.GetUsuLogado();
         var gastosList = await _repository.Get(usuLogado!.Usuario);
+        var datasCalc = await _repository.GetDatas();
 
-        var dto = GetGastosDto.MontarDto(gastosList, usuLogado.Salario, 2);
+        var dto = GetGastosDto
+                    .MontarDto(
+                        gastosList, 
+                        datasCalc,
+                        usuLogado.Salario 
+                        );
 
         if (gastosList.Any())
         {

@@ -14,4 +14,6 @@ public interface IGastoRepository
     Task<bool> Delete(string usu, string tipo);
     Task<GastoEntity?> Get(string usu, string tipo);
     Task<bool> SalarioCadastrado();
+    Task<IntervCalcGastoEntity> GetDatas();
+    Task<IntervCalcGastoEntity> UpdateDatas(IntervCalcGastoEntity newDatas, IntervCalcGastoEntity datasToUpdate);
 }

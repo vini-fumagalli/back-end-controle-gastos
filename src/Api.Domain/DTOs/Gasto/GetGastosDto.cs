@@ -10,8 +10,8 @@ public class GetGastosDto
 
     public static GetGastosDto MontarDto(
         List<GastoEntity> list,
-        double? salario,
-        int? diaPagamento
+        IntervCalcGastoEntity datasCalc,
+        double? salario
         )
     {
         if (list.Count == 0)
@@ -23,19 +23,8 @@ public class GetGastosDto
             };
         }
 
-        var mesAtual = DateTime.Now.Month;
-        var anoAtual = DateTime.Now.Year;
-        var proxMes = mesAtual + 1;
-        var proxAno = anoAtual;
-
-        if (proxMes > 12)
-        {
-            proxAno++;
-            proxMes = 1;
-        }
-
-        var dataIni = new DateTime(anoAtual, mesAtual, 6);
-        var dataFim = new DateTime(proxAno, proxMes, 6);
+        var dataIni = datasCalc.DataInicio;
+        var dataFim = datasCalc.DataFinal;
 
         var filtroMes = list
                         .Where(g =>
@@ -55,6 +44,11 @@ public class GetGastosDto
             GastoMax = gastoMax
         };
     }
+
+    
+
+
+
 }
 
 

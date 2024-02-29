@@ -11,12 +11,14 @@ public class GastoRepository : IGastoRepository
     private readonly MyContext _context;
     private readonly DbSet<GastoEntity> _gastoTbl;
     private readonly DbSet<UsuarioEntity> _usuTbl;
+    private readonly DbSet<IntervCalcGastoEntity> _intervCalcTbl;
 
     public GastoRepository(MyContext context)
     {
         _context = context;
         _gastoTbl = _context.Set<GastoEntity>();
         _usuTbl = _context.Set<UsuarioEntity>();
+        _intervCalcTbl = _context.Set<IntervCalcGastoEntity>();
     }
 
     public async Task<GastoEntity?> Create(GastoEntity despesa)
@@ -87,6 +89,49 @@ public class GastoRepository : IGastoRepository
         catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER GASTO DESEJADO => ", ex);
+        }
+    }
+
+    public async Task<IntervCalcGastoEntity> GetDatas()
+    {
+        try
+        {
+            var datasTbl = await _intervCalcTbl.FindAsync(1);
+
+            var dataHoje = DateTime.Today;
+
+            if(dataHoje < datasTbl!.DataFinal)
+            {
+                var newDatas = IntervCalcGastoEntity
+                                .MontarDatas(dataHoje);
+
+                return await UpdateDatas(newDatas, datasTbl);
+            }
+
+            return datasTbl;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("ERRO AO OBTER DATAS DE INTERVALO DE CÁLCULO => ", ex);
+        }
+    }
+
+    public async Task<IntervCalcGastoEntity> UpdateDatas(
+        IntervCalcGastoEntity newDatas, 
+        IntervCalcGastoEntity datasToUpdate
+        )
+    {
+        try
+        {
+            datasToUpdate!.DataInicio = newDatas.DataInicio;
+            datasToUpdate.DataFinal = newDatas.DataFinal;
+
+            await _context.SaveChangesAsync();
+            return newDatas;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("ERRO AO ATUALIZAR DATAS => ", ex);
         }
     }
 
@@ -161,6 +206,7 @@ public class GastoRepository : IGastoRepository
         return gasto;
     }
 
+
     public async Task<UsuarioEntity?> UpdateSalario(double salario)
     {
         try
@@ -183,4 +229,5 @@ public class GastoRepository : IGastoRepository
             throw new Exception("ERRO AO ATUALIZAR SALÁRIO DE USUÁRIO => ", ex);
         }
     }
+
 }
