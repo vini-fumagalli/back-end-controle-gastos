@@ -97,12 +97,12 @@ public class GastoController : ControllerBase
         }
     }
 
-    [HttpPut("salario-payday")]
-    public async Task<ActionResult<RespostaEntity>> UpdateSalario(UpdateSalarioDto dto)
+    [HttpPut("salario/{salario:double}")]
+    public async Task<ActionResult<RespostaEntity>> UpdateSalario(double salario)
     {
         try
         {
-            var resposta = await _service.UpdateSalario(dto);
+            var resposta = await _service.UpdateSalario(salario);
             return Ok(resposta);
         }
         catch (Exception ex)

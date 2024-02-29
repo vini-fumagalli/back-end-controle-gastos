@@ -9,7 +9,7 @@ public interface IGastoRepository
     Task<GastoEntity?> Create(GastoEntity despesa);
     Task<double?> GetSalario(string usuario);
     Task<GastoEntity?> Update(GastoEntity gasto);
-    Task<UsuarioEntity?> UpdateSalario(UpdateSalarioDto dto);
+    Task<UsuarioEntity?> UpdateSalario(double salario);
     Task<UsuarioEntity?> GetUsuLogado();
     Task<bool> Delete(string usu, string tipo);
     Task<GastoEntity?> Get(string usu, string tipo);

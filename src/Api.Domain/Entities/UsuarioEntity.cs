@@ -9,5 +9,4 @@ public class UsuarioEntity
     public string Senha { get; set; } = "";
     public bool Logado { get; set; }
     public double? Salario { get; set; }
-    public int? DiaPagamento { get; set; }
 }

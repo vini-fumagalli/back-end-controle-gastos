@@ -161,7 +161,7 @@ public class GastoRepository : IGastoRepository
         return gasto;
     }
 
-    public async Task<UsuarioEntity?> UpdateSalario(UpdateSalarioDto dto)
+    public async Task<UsuarioEntity?> UpdateSalario(double salario)
     {
         try
         {
@@ -173,8 +173,7 @@ public class GastoRepository : IGastoRepository
                 return null;
             }
 
-            usuToUpdate.Salario = dto.Salario;
-            usuToUpdate.DiaPagamento = dto.DiaPagamento;
+            usuToUpdate.Salario = salario;
             await _context.SaveChangesAsync();
 
             return usuToUpdate;
