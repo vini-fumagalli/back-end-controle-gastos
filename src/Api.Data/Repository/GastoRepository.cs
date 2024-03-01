@@ -100,7 +100,7 @@ public class GastoRepository : IGastoRepository
 
             var dataHoje = DateTime.Today;
 
-            if(dataHoje < datasTbl!.DataFinal)
+            if(dataHoje > datasTbl!.DataFinal)
             {
                 var newDatas = IntervCalcGastoEntity
                                 .MontarDatas(dataHoje);
