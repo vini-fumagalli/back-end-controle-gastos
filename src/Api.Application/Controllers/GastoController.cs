@@ -67,6 +67,11 @@ public class GastoController : ControllerBase
     {
         try
         {
+            if(dto.Valor == null || dto.Tipo == null || dto.DataMax == null)
+            {
+                return BadRequest();
+            }
+            
             var resposta = await _service.Create(dto);
             return Ok(resposta);
         }
