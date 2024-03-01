@@ -91,20 +91,4 @@ public class LoginRepository : ILoginRepository
             throw new Exception("ERRO AO REALIZAR CADSTRO => ", ex);
         }
     }
-
-    // public async Task<UsuarioEntity?> UpdateSalario(double newSalario)
-    // {
-    //     var usuToUpdate = await _usuTbl
-    //                             .SingleOrDefaultAsync(u => u.Logado == true);
-
-    //     if(usuToUpdate == null)
-    //     {
-    //         return null;
-    //     }
-
-    //     usuToUpdate.Salario = newSalario;
-    //     await _context.SaveChangesAsync();
-        
-    //     return usuToUpdate;
-    // }
 }

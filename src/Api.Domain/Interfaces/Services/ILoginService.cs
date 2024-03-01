@@ -9,5 +9,4 @@ public interface ILoginService
     Task<RespostaEntity> SignUp(SignUpDto newUsu);
     Task<RespostaEntity> SignIn(UsuarioEntity usuario);
     Task<RespostaEntity> SignOff();
-    // Task<RespostaEntity> UpdateSalario(double salario);
 }
