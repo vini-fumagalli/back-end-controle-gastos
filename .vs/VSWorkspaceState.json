@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Api.Application",
+    "\\src\\Api.Service",
+    "\\src\\Api.Service\\Services",
+    "\\src\\Properties"
+  ],
+  "SelectedNode": "\\src\\Properties\\launchSettings.json",
+  "PreviewInSolutionExplorer": false
+}

@@ -47,7 +47,7 @@ public class IntervCalcGastoEntity
 
      public static int VerificaFimDeSemana(DateTime data)
     {
-        if (data.DayOfWeek != DayOfWeek.Saturday && data.DayOfWeek != DayOfWeek.Sunday)
+        if (data.DayOfWeek != DayOfWeek.Sunday)
         {
             return 1;
         }
