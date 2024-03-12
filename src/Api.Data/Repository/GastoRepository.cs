@@ -100,7 +100,12 @@ public class GastoRepository : IGastoRepository
 
             var dataHoje = DateTime.Today;
 
-            if(dataHoje > datasTbl!.DataFinal)
+            if (datasTbl == null)
+            {
+                return await CreateDatas(dataHoje);
+            }
+
+            if (dataHoje > datasTbl!.DataFinal)
             {
                 var newDatas = IntervCalcGastoEntity
                                 .MontarDatas(dataHoje);
@@ -110,14 +115,14 @@ public class GastoRepository : IGastoRepository
 
             return datasTbl;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO OBTER DATAS DE INTERVALO DE CÁLCULO => ", ex);
         }
     }
 
     public async Task<IntervCalcGastoEntity> UpdateDatas(
-        IntervCalcGastoEntity newDatas, 
+        IntervCalcGastoEntity newDatas,
         IntervCalcGastoEntity datasToUpdate
         )
     {
@@ -129,7 +134,7 @@ public class GastoRepository : IGastoRepository
             await _context.SaveChangesAsync();
             return newDatas;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new Exception("ERRO AO ATUALIZAR DATAS => ", ex);
         }
@@ -230,4 +235,23 @@ public class GastoRepository : IGastoRepository
         }
     }
 
+    public async Task<IntervCalcGastoEntity> CreateDatas(DateTime dataAtual)
+    {
+        try
+        {
+            var datasToCreate = IntervCalcGastoEntity
+                                .MontarDatas(dataAtual);
+
+            await Task.WhenAll(
+                _intervCalcTbl.AddAsync(datasToCreate).AsTask(),
+                _context.SaveChangesAsync()
+            );
+
+            return datasToCreate;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("ERRO AO CRIAR DATAS => ", ex);
+        }
+    }
 }

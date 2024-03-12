@@ -15,5 +15,6 @@ public interface IGastoRepository
     Task<GastoEntity?> Get(string usu, string tipo);
     Task<bool> SalarioCadastrado();
     Task<IntervCalcGastoEntity> GetDatas();
+    Task<IntervCalcGastoEntity> CreateDatas(DateTime dataAtual);
     Task<IntervCalcGastoEntity> UpdateDatas(IntervCalcGastoEntity newDatas, IntervCalcGastoEntity datasToUpdate);
 }
